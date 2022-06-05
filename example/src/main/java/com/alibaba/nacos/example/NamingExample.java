@@ -23,6 +23,7 @@ import com.alibaba.nacos.api.naming.listener.AbstractEventListener;
 import com.alibaba.nacos.api.naming.listener.Event;
 import com.alibaba.nacos.api.naming.listener.NamingEvent;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -42,9 +43,11 @@ public class NamingExample {
     public static void main(String[] args) throws NacosException, InterruptedException {
         
         Properties properties = new Properties();
-        properties.setProperty("serverAddr", System.getProperty("serverAddr"));
-        properties.setProperty("namespace", System.getProperty("namespace"));
-        
+        properties.setProperty("serverAddr", "localhost");
+        properties.setProperty("namespace", "public");
+        // properties.setProperty("serverAddr", System.getProperty("serverAddr"));
+        // properties.setProperty("namespace", System.getProperty("namespace"));
+
         NamingService naming = NamingFactory.createNamingService(properties);
         
         naming.registerInstance("nacos.test.3", "11.11.11.11", 8888, "TEST1");
@@ -77,12 +80,18 @@ public class NamingExample {
             }
         });
     
-        naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "TEST1");
+        //naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "TEST1");
         
         Thread.sleep(1000);
     
         System.out.println("instances after deregister: " + naming.getAllInstances("nacos.test.3"));
         
         Thread.sleep(1000);
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
