@@ -16,6 +16,7 @@
 
 package com.alibaba.nacos.example;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
@@ -59,13 +60,18 @@ public class ConfigExample {
         content = configService.getConfig(dataId, group, 5000);
         System.out.println(content);
 
-        boolean isRemoveOk = configService.removeConfig(dataId, group);
-        System.out.println(isRemoveOk);
+        //boolean isRemoveOk = configService.removeConfig(dataId, group);
+        //System.out.println(isRemoveOk);
         Thread.sleep(3000);
 
         content = configService.getConfig(dataId, group, 5000);
         System.out.println(content);
         Thread.sleep(300000);
 
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -23,6 +23,7 @@ import com.alibaba.nacos.api.naming.listener.AbstractEventListener;
 import com.alibaba.nacos.api.naming.listener.Event;
 import com.alibaba.nacos.api.naming.listener.NamingEvent;
 
+import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -77,12 +78,18 @@ public class NamingExample {
             }
         });
     
-        naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "TEST1");
+        //naming.deregisterInstance("nacos.test.3", "11.11.11.11", 8888, "TEST1");
         
         Thread.sleep(1000);
     
         System.out.println("instances after deregister: " + naming.getAllInstances("nacos.test.3"));
         
         Thread.sleep(1000);
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
